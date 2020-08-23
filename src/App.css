@@ -1,0 +1,42 @@
+body {
+  background-color: #1b262c;
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  margin-top: 200px;
+  background-color: #0f4c75;
+  color: white;
+}
+
+.container h2 {
+  margin: 0px;
+  text-align: center;
+  background-color: #3282b8;
+}
+
+.container ul {
+  padding: 1px 20px;
+}
+.container li {
+  list-style: none;
+  margin-left:18px;
+}
+
+.container li input[type='checkbox'] {
+  margin-left: -18px;
+}
+
+.container .primary-add {
+  padding: 0 5px;
+  margin: 0;
+  width: 386px;
+  height: 30px;
+}
+
+.container .primary-add:focus {
+  outline: none;
+  border: 2px solid #bbe1fa;
+  width: 386px;
+}
