@@ -37,8 +37,8 @@ Currently very little! current Road map to MVP below.
 
 ### Version 0.1.2
 
-- [ ] Single todo list
-- [ ] Add task feature - Entering a new task and pressing enter should add a new task to the list
+- [X] Single todo list
+- [X] Add task feature - Entering a new task and pressing enter should add a new task to the list
 - [ ] Delete task feature - clicking the delete button attached to a task should remove it from the list
 
 ### Version 0.1.3
