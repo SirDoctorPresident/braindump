@@ -31,9 +31,9 @@ Currently very little! current Road map to MVP below.
 
 ## Version 0.1.1
 
-- [ ] Single todo list
-- [ ] Multiple components
-- [ ] List/html generated programmatically based on seed data
+- [X] Single todo list
+- [X] Multiple components
+- [X] List/html generated programmatically based on seed data
 
 ### Version 0.1.2
 
