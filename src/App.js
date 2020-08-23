@@ -1,38 +1,77 @@
 import React from 'react';
 import './App.css';
+import seedData from './seedData';
 
 function App() {
+  console.log(seedData);
   return (
-    <div className="container">
-      <h2>TODO</h2>
-      <ul>
-        <li><input type="checkbox" /> Yoga</li>
-        <li><input type="checkbox" /> Dishes</li>
-        <li><input type="checkbox" /> Todo list MVP
-          <ul>
-            <li><input type="checkbox" /> Design static page with seed data</li>
-            <li><input type="checkbox" /> Make static page with seed data
-              <ul>
-                <li><input type="checkbox" /> Write and style page</li>
-                <li><input type="checkbox" /> Generate seed data for comparison</li>
-              </ul>
-            </li>
-            <li><input type="checkbox" /> Implement static page with react components</li>
-            <li><input type="checkbox" /> Hoist State as appropriate</li>
-            <li><input type="checkbox" /> Implement add/delete tasks</li>
-            <li><input type="checkbox" /> Implement add/delete subtasks</li>
-            <li><input type="checkbox" /> Implement rearrange taks</li>
-            <li><input type="checkbox" /> Add history</li>
-          </ul>
-        </li>
-        <li><input type="checkbox" /> Check Mychart email</li>
-        <li><input type="checkbox" /> Pay KP fees online</li>
-        <li><input type="checkbox" /> Call Morehouse for Watkins</li>
-        <li><input type="checkbox" /> Groceries</li>
-      </ul>
-      <input type="text" class="primary-add" placeholder="Add a new task to 'TODO'"/>
-    </div>
+    <React.Fragment>
+      <Container title={seedData[0].title}
+                 tasks={seedData[0].tasks}>
+      </Container>
+    </React.Fragment>
   );
 }
 
+class Container extends React.Component {
+  render() {
+    return (
+      <div className="container">
+        <Header title={this.props.title}></Header>
+        <TaskList tasks={this.props.tasks}></TaskList>
+        <AddNew></AddNew>
+      </div>
+    );
+  }
+}
+
+class Header extends React.Component {
+  render() {
+    return <h2>{this.props.title}</h2>
+  }
+}
+
+class TaskList extends React.Component {
+  render() {
+    let i = 0;
+    let tasks = this.props.tasks.map( (task)=> {
+      console.log(task);
+      return <Task task={task} key={i++}></Task>
+    });
+
+    return (
+      <ul>{tasks}</ul>
+    )
+  }
+}
+
+class AddNew extends React.Component {
+  render() {
+    return (      
+      <input type="text" className="primary-add" placeholder="Add a new task to 'TODO'" />
+    )
+  }
+}
+
+class Task extends React.Component {
+  render() {
+    let i = 0;
+    let subtasks = this.props.task.subtasks.map( (task)=> {
+      console.log(task);
+      return <Task task={task} key={i++}></Task>
+    });
+
+   return (
+    <li>
+      <input type="checkbox" defaultChecked={this.props.task.completed}/>
+      {this.props.task.text}
+      <ul>
+        {subtasks}
+      </ul>
+    </li>
+  )
+  }
+}
+
 export default App;
+
