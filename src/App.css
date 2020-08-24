@@ -1,27 +1,53 @@
 body {
-  background-color: #1b262c;
+  background-color: #0D1B2A;
+  color: #B2F7EF;
 }
 
 .container {
   max-width: 400px;
   margin: auto;
   margin-top: 200px;
-  background-color: #0f4c75;
-  color: white;
+  background-color: #21897E;
+  /* color: white; */
 }
 
 .container h2 {
   margin: 0px;
   text-align: center;
-  background-color: #3282b8;
+  background-color: #AA1155;
+  color: white;
 }
 
 .container ul {
   padding: 1px 20px;
 }
+
 .container li {
   list-style: none;
   margin-left:18px;
+  display: block;
+}
+
+.container li:hover {
+  background-color: #B2F7EF;
+  color:#0D1B2A;
+}
+.container * ul {
+  padding-right: 0px;
+}
+
+.container li span:nth-child(2) {
+  display: inline-block;
+  width: 90%;
+}
+
+.container input[type='checkbox'] {
+  float: left;
+}
+.container li span:nth-child(3) {
+  float: right;
+  padding-top: 3px;
+  padding-right: 3px;
 }
 
 .container li input[type='checkbox'] {
@@ -37,6 +63,10 @@ body {
 
 .container .primary-add:focus {
   outline: none;
-  border: 2px solid #bbe1fa;
+  border: 2px solid #AA1155;
   width: 386px;
+}
+
+li span{
+  
 }
