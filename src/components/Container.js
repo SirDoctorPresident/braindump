@@ -8,7 +8,7 @@ class Container extends React.Component {
         super(props);
         this.state = {
             tasks: this.props.tasks,
-            selected: this.props.tasks
+            currentIndex: []
         }
     }
 
@@ -19,10 +19,16 @@ class Container extends React.Component {
             subtasks: []
         };
 
-        let tasks = [...this.state.selected.subtasks];
-        tasks.push(task);
+        let subtasks;
+        if(this.state.currentIndex.length > 0) {
+            subtasks = this.getNestedTask(this.state.tasks, this.state.currentIndex).subtasks;
+        } else {
+            subtasks = this.state.tasks;
+        }
 
-        this.setState({ tasks: tasks });
+        subtasks.push(task);
+
+        this.setState({ tasks: [...this.state.tasks] });
     }
 
     removeItem(indices) {
@@ -62,9 +68,8 @@ class Container extends React.Component {
         return target;
     }
 
-    selectTask(indices) {
-        console.log(indices + ' selected');
-        this.state.selected = this.getNestedTask(this.props.tasks, indices);
+    setCurrentIndex(indices) {
+        this.setState({currentIndex: indices});
     }
 
     render() {
@@ -74,7 +79,7 @@ class Container extends React.Component {
 
                 <TaskList tasks={this.state.tasks} 
                           removeItem={(indices) => { this.removeItem(indices) }}
-                          selectTask={(indices)=>this.selectTask(indices)}></TaskList>
+                          selectTask={(indices)=>this.setCurrentIndex(indices)}></TaskList>
 
                 <AddNew addNewTask={(text) => { this.addTask(text) }}></AddNew>
             </div>
