@@ -6,8 +6,8 @@ import seedData from './seedData';
 function App() {
   return (
     <React.Fragment>
-      <Container title={seedData[0].title}
-                 tasks={seedData[0].tasks}>
+      <Container title={seedData[0].text}
+                 tasks={seedData[0].subtasks}>
       </Container>
     </React.Fragment>
   );

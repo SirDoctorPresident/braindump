@@ -1,6 +1,7 @@
 export default [{
-    title: 'TODO',
-    tasks: [
+    text: 'TODO',
+    completed: false,
+    subtasks: [
       {
         text: 'Yoga',
         completed: false,
