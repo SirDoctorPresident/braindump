@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from './Container.js';
+import Container from './components/Container.js';
 import './App.css';
 import seedData from './seedData';
 

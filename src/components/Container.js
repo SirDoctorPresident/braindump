@@ -5,22 +5,21 @@ import AddNew from './AddNew.js';
 
 class Container extends React.Component {
     constructor(props) {
-        // this smells, i think because the state is supposed to live one level up
         super(props);
         this.state = {
-            tasks: this.props.tasks
+            tasks: this.props.tasks,
+            selected: this.props.tasks
         }
     }
 
     addTask(text) {
-        //TODO: take indices to add the new task at the correct level of the hierarchy
         let task = {
             text: text,
             completed: false,
             subtasks: []
         };
 
-        let tasks = [...this.state.tasks];
+        let tasks = [...this.state.selected.subtasks];
         tasks.push(task);
 
         this.setState({ tasks: tasks });
@@ -49,11 +48,34 @@ class Container extends React.Component {
         return target;
     }
 
+    getNestedTask(baseList, indices) {
+        let target = baseList;
+
+        indices.forEach(index => {
+            if(target.subtasks) {
+                target = target.subtasks[index];
+            } else {
+                target = target[index];
+            }
+        })
+
+        return target;
+    }
+
+    selectTask(indices) {
+        console.log(indices + ' selected');
+        this.state.selected = this.getNestedTask(this.props.tasks, indices);
+    }
+
     render() {
         return (
             <div className="container">
                 <Header title={this.props.title}></Header>
-                <TaskList tasks={this.state.tasks} removeItem={(indices) => { this.removeItem(indices) }}></TaskList>
+
+                <TaskList tasks={this.state.tasks} 
+                          removeItem={(indices) => { this.removeItem(indices) }}
+                          selectTask={(indices)=>this.selectTask(indices)}></TaskList>
+
                 <AddNew addNewTask={(text) => { this.addTask(text) }}></AddNew>
             </div>
         );
