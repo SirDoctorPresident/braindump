@@ -43,13 +43,12 @@ Currently very little! current Road map to MVP below.
 
 ### Version 0.1.3
 
-- [ ] Single todo list
-- [ ] Add subtask feature - Clicking on an existing task should make it active; while an existing task is active, typing a new task into the `add task` input should generate a new subtask *under* the selected task
+- [X] Single todo list
+- [X] Add subtask feature - Clicking on an existing task should make it active; while an existing task is active, typing a new task into the `add task` input should generate a new subtask *under* the selected task
 - [X] Subtasks should be deletable as well
 
 ### Version 0.1.4
 
-- [ ] Single todo list
 - [ ] Add rearrange task feature - add an icon to each task which, when clicked, allows the user to drag the selected task and drop it anywhere in the task hierarchy. A task should carry all its subtasks with it.
 
 ### Version 0.1.5
