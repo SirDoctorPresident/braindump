@@ -31,21 +31,21 @@ Currently very little! current Road map to MVP below.
 
 ## Version 0.1.1
 
-- [ ] Single todo list
-- [ ] Multiple components
-- [ ] List/html generated programmatically based on seed data
+- [X] Single todo list
+- [X] Multiple components
+- [X] List/html generated programmatically based on seed data
 
 ### Version 0.1.2
 
-- [ ] Single todo list
-- [ ] Add task feature - Entering a new task and pressing enter should add a new task to the list
-- [ ] Delete task feature - clicking the delete button attached to a task should remove it from the list
+- [X] Single todo list
+- [X] Add task feature - Entering a new task and pressing enter should add a new task to the list
+- [X] Delete task feature - clicking the delete button attached to a task should remove it from the list
 
 ### Version 0.1.3
 
 - [ ] Single todo list
 - [ ] Add subtask feature - Clicking on an existing task should make it active; while an existing task is active, typing a new task into the `add task` input should generate a new subtask *under* the selected task
-- [ ] Subtasks should be deletable as well
+- [X] Subtasks should be deletable as well
 
 ### Version 0.1.4
 
@@ -74,3 +74,14 @@ Currently very little! current Road map to MVP below.
 
 - [ ] Revisit UI element design.
 - [ ] Consider adding a "floating dock" with add, edit, delete, and rearrange icons that will appear beside whatever task is clicked
+
+
+### Additional Features
+
+- Allow user to generate task hierarchy during single task creation using enter/tabs
+- Switch delete and checkbox icons
+- Single/double tap to edit
+- "long press" to drag
+- Fix hover bug; hovering over an li should only highlight that li, not its children. (Need to make this a script event instead of a css event)
+- Fix checkboxes. Need to tie `checked` to the `completed` property of the corresponding task to fix key bug caused when removing tasks.
+- Add "flush" icon to todo title to remove completed task and preserve uncompleted ones
