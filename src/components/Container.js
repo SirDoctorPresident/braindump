@@ -72,6 +72,14 @@ class Container extends React.Component {
         this.setState({currentIndex: indices});
     }
 
+    toggleCompleted(indices) {
+        let task = this.getNestedTask(this.state.tasks, indices);
+
+        task.completed = !task.completed;
+
+        this.setState({tasks: [...this.state.tasks]})
+    }
+
     render() {
         return (
             <div className="container">
@@ -79,7 +87,8 @@ class Container extends React.Component {
 
                 <TaskList tasks={this.state.tasks} 
                           removeItem={(indices) => { this.removeItem(indices) }}
-                          selectTask={(indices)=>this.setCurrentIndex(indices)}></TaskList>
+                          selectTask={(indices)=>this.setCurrentIndex(indices)}
+                          toggleCompleted={(indices)=>{this.toggleCompleted(indices)}}></TaskList>
 
                 <AddNew addNewTask={(text) => { this.addTask(text) }}></AddNew>
             </div>

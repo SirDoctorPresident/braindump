@@ -8,7 +8,8 @@ class TaskList extends React.Component {
                          key={index}
                          indices={[index]}
                          onDeleteClicked={(indices) => { this.props.removeItem(indices) }}
-                         selectTask={(indices)=>{this.props.selectTask(indices)}}></Task>
+                         selectTask={(indices)=>{this.props.selectTask(indices)}}
+                         toggleCompleted={(indices)=>{this.props.toggleCompleted(indices)}}></Task>
         });
 
         return (
