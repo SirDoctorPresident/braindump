@@ -77,10 +77,16 @@ Currently very little! current Road map to MVP below.
 
 ### Additional Features
 
-- Allow user to generate task hierarchy during single task creation using enter/tabs
-- Switch delete and checkbox icons
-- Single/double tap to edit
-- "long press" to drag
-- Fix hover bug; hovering over an li should only highlight that li, not its children. (Need to make this a script event instead of a css event)
-- Fix checkboxes. Need to tie `checked` to the `completed` property of the corresponding task to fix key bug caused when removing tasks.
-- Add "flush" icon to todo title to remove completed task and preserve uncompleted ones
+- [] Allow user to generate task hierarchy during single task creation using enter/tabs
+- [] Single/double tap to edit
+- [] Swipe to delete
+- [] "long press" to drag
+- [] Allow user to click title card to set the top level list as currently selected
+- [] Allow the user to click anywhere on the page to make the top level list of the previously selected task currently selected
+- [] Selection should come with a visual cue and automatically highlight the add new input
+- [] Consider making delete icon only appear for selected todo (keep does this)
+- [] Add "flush" icon to todo title to remove completed task and preserve uncompleted ones
+- [] Add an option for "notes" instead of checkboxes (bullet instead of checkbox)
+- [X] Fix hover bug; hovering over an li should only highlight that li, not its children. (Need to make this a script event instead of a css event)
+- [X] Switch delete and checkbox icons
+- [X] Fix checkboxes. Need to tie `checked` to the `completed` property of the corresponding task to fix key bug caused when removing tasks.
