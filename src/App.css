@@ -38,12 +38,10 @@ body {
 
 .container li span:nth-child(2) {
   display: inline-block;
-  width: 90%;
+  width: 80%;
 }
 
-.container input[type='checkbox'] {
-  float: right;
-}
+
 .container li span.fa-times-circle {
   float: left;
   margin-left: -18px;
@@ -51,9 +49,18 @@ body {
   padding-right: 5px;
 }
 
-.container li input[type='checkbox'] {
-  margin-left: -18px;
-  margin-top: 4px;
+.container li .right-controls {
+  float: right;
+  display: flex;
+
+}
+
+.container li .right-controls span {
+  margin-left: 3px;
+}
+
+.container li .right-controls .fa-grip-vertical {
+  cursor: move;
 }
 
 .container .primary-add {
@@ -68,3 +75,4 @@ body {
   border: 2px solid #AA1155;
   width: 386px;
 }
+
