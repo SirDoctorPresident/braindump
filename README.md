@@ -49,7 +49,7 @@ Currently very little! current Road map to MVP below.
 
 ### Version 0.1.4
 
-- [ ] Add rearrange task feature - add an icon to each task which, when clicked, allows the user to drag the selected task and drop it anywhere in the task hierarchy. A task should carry all its subtasks with it.
+- [X] Add rearrange task feature - add an icon to each task which, when clicked, allows the user to drag the selected task and drop it anywhere in the task hierarchy. A task should carry all its subtasks with it.
 
 ### Version 0.1.5
 

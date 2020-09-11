@@ -80,6 +80,37 @@ class Container extends React.Component {
         this.setState({tasks: [...this.state.tasks]})
     }
 
+    shiftTask(from, to) {
+        console.log('Moving ' + from + ' to ' + to);
+
+        let tasks = [...this.state.tasks];
+
+        //get from task
+        let fromIndex = from.pop();
+        let fromList = this.getNestedList(tasks, from);
+
+        let toIndex = to.pop();
+
+        let task = fromList[fromIndex];
+
+        //splice 'task' into array
+        //if to index is -1 we just append to the end of the task list
+        if(to && to[0] === '-1'){
+            tasks.push(task);
+        } else {
+            let toList = this.getNestedList(tasks, to);
+            toList.splice(toIndex, 0, task);
+        }
+
+        if(from.length === to.length && fromIndex > toIndex){
+            fromIndex++;
+        }
+        
+        fromList.splice(fromIndex, 1);
+
+        this.setState({tasks: tasks});
+    }
+    
     render() {
         return (
             <div className="container">
@@ -88,7 +119,8 @@ class Container extends React.Component {
                 <TaskList tasks={this.state.tasks} 
                           removeItem={(indices) => { this.removeItem(indices) }}
                           selectTask={(indices)=>this.setCurrentIndex(indices)}
-                          toggleCompleted={(indices)=>{this.toggleCompleted(indices)}}></TaskList>
+                          toggleCompleted={(indices)=>{this.toggleCompleted(indices)}}
+                          shiftTask={(from, to)=>(this.shiftTask(from,to))}></TaskList>
 
                 <AddNew addNewTask={(text) => { this.addTask(text) }}></AddNew>
             </div>

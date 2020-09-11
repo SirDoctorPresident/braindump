@@ -6,6 +6,23 @@ class Task extends React.Component {
         this.state = {dragging: false};
     }
 
+    onDragStart(e) {
+        e.stopPropagation();
+        e.dataTransfer.setData('text/plain', this.props.indices.join());
+        let placeholder = document.createElement("div");
+        placeholder.id = 'placeholder';
+        document.body.append(placeholder);
+    }
+
+    onDragEnd(e) {
+        e.stopPropagation();
+        this.setState({dragging: false});
+
+        let placeholder = document.querySelector('#placeholder');
+        if(placeholder)
+            placeholder.remove();
+    }
+
     render() {
         let subtasks = this.props.task.subtasks.map((task, index) => {
             let indices = [...this.props.indices, index];
@@ -15,14 +32,17 @@ class Task extends React.Component {
                 key={index}
                 onDeleteClicked={(indexes) => { this.props.onDeleteClicked(indexes) }}
                 selectTask={(indices) => { this.props.selectTask(indices) }}
-                toggleCompleted={(indices) => { this.props.toggleCompleted(indices) }}>
+                toggleCompleted={(indices) => { this.props.toggleCompleted(indices) }}
+                shiftTask={(from, to)=>this.props.shiftTask(from, to)}
+                catchTask={(e)=>{this.props.catchTask(e)}}>
             </Task>
         });
 
         return (
             <li className={this.state.dragging? "dragging": "" }
                 draggable={this.state.dragging}
-                onDragEnd={()=>{this.setState({dragging: false})}}
+                onDragStart={(e)=>{this.onDragStart(e)}}
+                onDragEnd={(e)=>{this.onDragEnd(e)}}
                 id={this.props.indices.join()}>
 
                 <div className="task-content" onClick={(e, indices) => { e.stopPropagation(); this.props.selectTask(this.props.indices) }}>
@@ -32,15 +52,17 @@ class Task extends React.Component {
                     <span>{this.props.task.text}</span>
 
                     <span className="right-controls">
-                        <input type="checkbox" checked={this.props.task.completed}
-                            onChange={(e) => { this.props.toggleCompleted(this.props.indices) }} />
+                        {/* <input type="checkbox" checked={this.props.task.completed}
+                            onChange={(e) => { this.props.toggleCompleted(this.props.indices) }} /> */}
+                            <span className={this.props.task.completed? 'fa fa-check-square': 'fa fa-square'}
+                                  onClick={e=>this.props.toggleCompleted(this.props.indices)}></span>
 
                         <span className="fa fa-grip-vertical"
                               onMouseDown={()=>{this.setState({dragging: true})}}></span>
                     </span>
                 </div>
 
-                <ul>
+                <ul onDragOver={(e)=>{e.stopPropagation(); this.props.catchTask(e)}}>
                     {subtasks}
                 </ul>
             </li>
