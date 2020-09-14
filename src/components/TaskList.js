@@ -64,9 +64,9 @@ class TaskList extends React.Component {
         let placeholder = document.querySelector('#placeholder');
         let dragging = document.querySelector('.dragging');
 
-        // placeholder.parentNode.insertBefore(dragging, placeholder);
-
-        this.props.shiftTask(dragging.id.split(','), placeholder.getAttribute('data-indices').split(','))
+        if(placeholder.hasAttribute('data-indices')) {
+            this.props.shiftTask(dragging.id.split(','), placeholder.getAttribute('data-indices').split(','))
+        }
         placeholder.remove();
     }
 
