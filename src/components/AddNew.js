@@ -3,7 +3,7 @@ import React from 'react';
 class AddNew extends React.Component {
     submitNewTask(e) {
         if (e.keyCode === 13) {
-            this.props.addNewTask(e.target.value);
+            this.props.addTask(e.target.value);
             e.target.value = '';
         }
     }

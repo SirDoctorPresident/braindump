@@ -30,10 +30,10 @@ class Task extends React.Component {
             return <Task task={task}
                 indices={indices}
                 key={index}
-                onDeleteClicked={(indexes) => { this.props.onDeleteClicked(indexes) }}
+                deleteTask={(indexes) => { this.props.deleteTask(indexes) }}
                 selectTask={(indices) => { this.props.selectTask(indices) }}
-                toggleCompleted={(indices) => { this.props.toggleCompleted(indices) }}
-                shiftTask={(from, to)=>this.props.shiftTask(from, to)}
+                toggleTask={(indices) => { this.props.toggleTask(indices) }}
+                moveTask={(from, to)=>this.props.moveTask(from, to)}
                 catchTask={(e)=>{this.props.catchTask(e)}}>
             </Task>
         });
@@ -47,15 +47,15 @@ class Task extends React.Component {
 
                 <div className="task-content" onClick={(e, indices) => { e.stopPropagation(); this.props.selectTask(this.props.indices) }}>
                     <span className="fas fa-times-circle"
-                        onClick={(e) => { e.stopPropagation(); this.props.onDeleteClicked(this.props.indices) }}></span>
+                        onClick={(e) => { e.stopPropagation(); this.props.deleteTask(this.props.indices) }}></span>
 
                     <span>{this.props.task.text}</span>
 
                     <span className="right-controls">
                         {/* <input type="checkbox" checked={this.props.task.completed}
-                            onChange={(e) => { this.props.toggleCompleted(this.props.indices) }} /> */}
+                            onChange={(e) => { this.props.toggleTask(this.props.indices) }} /> */}
                             <span className={this.props.task.completed? 'fa fa-check-square': 'fa fa-square'}
-                                  onClick={e=>this.props.toggleCompleted(this.props.indices)}></span>
+                                  onClick={e=>this.props.toggleTask(this.props.indices)}></span>
 
                         <span className="fa fa-grip-vertical"
                               onMouseDown={()=>{this.setState({dragging: true})}}></span>

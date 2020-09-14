@@ -9,8 +9,7 @@ class TaskList extends React.Component {
 
         let closestTask = this.getTaskMouseIsOver(e.clientY);
 
-        if(closestTask && closestTask.position === 'above' && dragging.nextSibling === closestTask.element)
-        {
+        if (closestTask && closestTask.position === 'above' && dragging.nextSibling === closestTask.element) {
             return;
         } else if (closestTask && closestTask.position === 'below' && dragging.previousSibling === closestTask.element) {
             return;
@@ -64,22 +63,25 @@ class TaskList extends React.Component {
         let placeholder = document.querySelector('#placeholder');
         let dragging = document.querySelector('.dragging');
 
-        if(placeholder.hasAttribute('data-indices')) {
-            this.props.shiftTask(dragging.id.split(','), placeholder.getAttribute('data-indices').split(','))
+        if (placeholder.hasAttribute('data-indices')) {
+            this.props.moveTask(dragging.id.split(','), placeholder.getAttribute('data-indices').split(','))
         }
         placeholder.remove();
     }
 
     render() {
         let tasks = this.props.tasks.map((task, index) => {
-            return <Task task={task}
-                key={index}
-                indices={[index]}
-                onDeleteClicked={(indices) => { this.props.removeItem(indices) }}
-                selectTask={(indices) => { this.props.selectTask(indices) }}
-                toggleCompleted={(indices) => { this.props.toggleCompleted(indices) }}
-                shiftTask={(from, to) => this.props.shiftTask(from, to)}
-                catchTask={e => this.catchTask(e)}></Task>
+            return (
+                <Task task={task}
+                    key={index}
+                    indices={[index]}
+                    selectTask={this.props.selectTask}
+                    toggleTask={this.props.toggleTask}
+                    deleteTask={this.props.deleteTask}
+                    moveTask={this.props.moveTask}
+                    catchTask={this.catchTask.bind(this)}
+                ></Task>
+            )
         });
 
         return (
