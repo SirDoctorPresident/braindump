@@ -1,5 +1,6 @@
 import React from 'react';
-import Container from './components/Container.js';
+import TaskListContainer from './components/TaskListContainer.js';
+import Taskwell from './components/Taskwell.js';
 import './App.css';
 import seedData from './seedData';
 
@@ -9,7 +10,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      tasks: seedData[0].subtasks,
+      tasks: seedData,
       currentIndex: [],
       taskManager: {
         addTask: this.addTask.bind(this),
@@ -70,6 +71,7 @@ class App extends React.Component {
     let fromIndex = from.pop();
     let fromList = this.getNestedList(tasks, from);
 
+
     let toIndex = to.pop();
 
     let task = fromList[fromIndex];
@@ -83,7 +85,7 @@ class App extends React.Component {
       toList.splice(toIndex, 0, task);
     }
 
-    if (from.length === to.length && fromIndex > toIndex) {
+    if (from.length === to.length && from.join() === to.join() && fromIndex > toIndex) {
       fromIndex++;
     }
 
@@ -122,11 +124,24 @@ class App extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Container {...this.state.taskManager} title={seedData[0].text}
-          tasks={this.state.tasks}>
-        </Container>
-      </React.Fragment>
+      <Taskwell moveTask={this.moveTask.bind(this)}>
+          {
+            this.state.tasks.map((tasks, index) => {
+              return (
+                <TaskListContainer
+                  key={index}
+                  index={index}
+                  title={tasks.text}
+                  tasks={tasks.subtasks}
+                  {...this.state.taskManager}
+                ></TaskListContainer>
+              )
+            })
+          }
+          <button className="add-task-list"
+                  onClick={ (e)=>{this.selectTask([]); this.addTask('test')}}
+                >+</button>
+      </Taskwell>
     );
   }
 }

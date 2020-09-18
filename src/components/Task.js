@@ -1,9 +1,9 @@
 import React from 'react';
 
 class Task extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = {dragging: false};
+        this.state = { dragging: false };
     }
 
     onDragStart(e) {
@@ -16,10 +16,10 @@ class Task extends React.Component {
 
     onDragEnd(e) {
         e.stopPropagation();
-        this.setState({dragging: false});
+        this.setState({ dragging: false });
 
         let placeholder = document.querySelector('#placeholder');
-        if(placeholder)
+        if (placeholder)
             placeholder.remove();
     }
 
@@ -33,19 +33,21 @@ class Task extends React.Component {
                 deleteTask={(indexes) => { this.props.deleteTask(indexes) }}
                 selectTask={(indices) => { this.props.selectTask(indices) }}
                 toggleTask={(indices) => { this.props.toggleTask(indices) }}
-                moveTask={(from, to)=>this.props.moveTask(from, to)}
-                catchTask={(e)=>{this.props.catchTask(e)}}>
+                moveTask={(from, to) => this.props.moveTask(from, to)}
+                onDragOver={(e) => { this.props.onDragOver(e) }}>
             </Task>
         });
 
         return (
-            <li className={this.state.dragging? "dragging": "" }
+            <li className={this.state.dragging ? "dragging" : ""}
                 draggable={this.state.dragging}
-                onDragStart={(e)=>{this.onDragStart(e)}}
-                onDragEnd={(e)=>{this.onDragEnd(e)}}
+                onDragStart={(e) => { this.onDragStart(e) }}
+                onDragEnd={(e) => { this.onDragEnd(e) }}
                 id={this.props.indices.join()}>
 
-                <div className="task-content" onClick={(e, indices) => { e.stopPropagation(); this.props.selectTask(this.props.indices) }}>
+                <div className="task-content"
+                    onClick={(e, indices) => { e.stopPropagation(); this.props.selectTask(this.props.indices) }}>
+
                     <span className="fas fa-times-circle"
                         onClick={(e) => { e.stopPropagation(); this.props.deleteTask(this.props.indices) }}></span>
 
@@ -54,15 +56,16 @@ class Task extends React.Component {
                     <span className="right-controls">
                         {/* <input type="checkbox" checked={this.props.task.completed}
                             onChange={(e) => { this.props.toggleTask(this.props.indices) }} /> */}
-                            <span className={this.props.task.completed? 'fa fa-check-square': 'fa fa-square'}
-                                  onClick={e=>this.props.toggleTask(this.props.indices)}></span>
+                        <span className={this.props.task.completed ? 'fa fa-check-square' : 'fa fa-square'}
+                            onClick={e => this.props.toggleTask(this.props.indices)}></span>
 
                         <span className="fa fa-grip-vertical"
-                              onMouseDown={()=>{this.setState({dragging: true})}}></span>
+                            onMouseDown={() => { this.setState({ dragging: true }) }}></span>
                     </span>
                 </div>
 
-                <ul onDragOver={(e)=>{e.stopPropagation(); this.props.catchTask(e)}}>
+                <ul
+                >
                     {subtasks}
                 </ul>
             </li>

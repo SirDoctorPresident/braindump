@@ -2,12 +2,13 @@ import React from 'react';
 import Task from './Task.js';
 
 class TaskList extends React.Component {
-    catchTask(e) {
+    onDragOver(e) {
         e.preventDefault();
+        e.stopPropagation();
         let dragging = document.querySelector('.dragging');
         let placeholder = document.querySelector('#placeholder');
 
-        let closestTask = this.getTaskMouseIsOver(e.clientY);
+        let closestTask = this.getTaskMouseIsOver(e.clientY, e.clientX);
 
         if (closestTask && closestTask.position === 'above' && dragging.nextSibling === closestTask.element) {
             return;
@@ -17,7 +18,7 @@ class TaskList extends React.Component {
             return;
         }
 
-        if (closestTask.element) {
+        if (closestTask.element && placeholder) {
             let ancestor = closestTask.element;
             let inSubtask = false;
             while (ancestor = ancestor.parentNode) {
@@ -41,25 +42,34 @@ class TaskList extends React.Component {
                     closestTask.element.parentNode.insertBefore(placeholder, closestTask.element.nextSibling);
                 }
             }
+        } else if (placeholder) {
+            placeholder.setAttribute('data-indices', this.props.index + ',0');
+            e.currentTarget.appendChild(placeholder);
         }
     }
 
-    getTaskMouseIsOver(y) {
+    getTaskMouseIsOver(y, x) {
         let tasks = [...document.querySelectorAll('li:not(.dragging)')];
 
-        return tasks.reduce((closest, task) => {
-            const box = task.querySelector('.task-content').getBoundingClientRect();
-            const offset = y - box.top - box.height / 2;
+        return tasks.filter((task) => {
+            const box = task.getBoundingClientRect();
 
-            if (Math.abs(offset) < closest.offset)
-                return { offset: offset, element: task, position: offset < 0 ? 'above' : 'below' }
+            return x >= box.left && x <= box.left + box.width;
+        }).reduce((closest, task) => {
+            const box = task.querySelector('.task-content').getBoundingClientRect();
+            const offsetY = y - box.top - box.height / 2;
+
+            if (Math.abs(offsetY) < closest.offsetY)
+                return {offsetY: offsetY, element: task, position: offsetY < 0 ? 'above' : 'below' }
             else
                 return closest
-        }, { offset: Number.POSITIVE_INFINITY, element: null });
+        }, { offsetY: Number.POSITIVE_INFINITY, element: null });
     }
 
 
     dropTask(e) {
+        e.stopPropagation();
+        
         let placeholder = document.querySelector('#placeholder');
         let dragging = document.querySelector('.dragging');
 
@@ -74,20 +84,26 @@ class TaskList extends React.Component {
             return (
                 <Task task={task}
                     key={index}
-                    indices={[index]}
+                    indices={[this.props.index, index]}
                     selectTask={this.props.selectTask}
                     toggleTask={this.props.toggleTask}
                     deleteTask={this.props.deleteTask}
                     moveTask={this.props.moveTask}
-                    catchTask={this.catchTask.bind(this)}
+                    onDragOver={this.onDragOver.bind(this)}
                 ></Task>
             )
         });
 
         return (
-            <ul onDragOver={e => this.catchTask(e)}
+            <ul 
+                onDragOver={e => this.onDragOver(e)}
                 onDrop={(e) => { this.dropTask(e) }}
-            >{tasks}</ul>
+                onDragEnter={(e)=>{e.stopPropagation(); document.querySelector('#placeholder').className = 'task-spacer';
+            }}
+                
+            >
+                {tasks}
+            </ul>
         )
     }
 }

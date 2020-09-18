@@ -13,7 +13,8 @@ class AddNew extends React.Component {
             <input type="text"
                 className="primary-add"
                 placeholder="Add a new task to 'TODO'"
-                onKeyUp={(e) => this.submitNewTask(e)} />
+                onKeyUp={(e) => this.submitNewTask(e)} 
+                onFocus={(e) => this.props.selectTask([this.props.index])}/>
         )
     }
 }
