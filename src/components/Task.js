@@ -63,6 +63,10 @@ class Task extends React.Component {
 
                 this.props.moveTask(fromIndices, toIndices);
             }
+        } else if (e.keyCode === 8) {
+            if(e.target.textContent.length === 0) {
+                this.props.deleteTask(this.props.indices);
+            }
         }
     }
 
