@@ -89,6 +89,8 @@ class TaskList extends React.Component {
                     toggleTask={this.props.toggleTask}
                     deleteTask={this.props.deleteTask}
                     moveTask={this.props.moveTask}
+                    updateTask={this.props.updateTask}
+                    addTask={this.props.addTask}
                     onDragOver={this.onDragOver.bind(this)}
                 ></Task>
             )

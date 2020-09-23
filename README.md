@@ -53,21 +53,21 @@ Currently very little! current Road map to MVP below.
 
 ### Version 0.1.5
 
-- [ ] Generate new list feature - add a button which, when clicked, prompts the user for a title and then generates a new list based on this title.
-- [ ] Initially, we will limit this feature to 4 lists per page
+- [X] Generate new list feature - add a button which, when clicked, prompts the user for a title and then generates a new list based on this title.
+- ~~[ ] Initially, we will limit this feature to 4 lists per page~~
 
 ### Version 0.1.6
 
-- [ ] Make "rearrange" feature work across lists - you should be able to drag a task from one list and drop it in another list
+- [X] Make "rearrange" feature work across lists - you should be able to drag a task from one list and drop it in another list
 
 ### Version 0.1.7
 
-- [ ] Allow a task to be dropped outside of any existing list - when this is done the task should become the title of a new list and its subtasks should become the tasks.
+- [X] Allow a task to be dropped outside of any existing list - when this is done the task should become the title of a new list and its subtasks should become the tasks.
 
 ### Version 0.1.8
 
-- [ ] Make positioning absolute; user should be able to drag lists anywhere on the page
-- [ ] Remove limit on the number of lists
+- ~~[ ] Make positioning absolute; user should be able to drag lists anywhere on the page~~
+- [X] Remove limit on the number of lists
 
 ### Version 0.1.9
 
@@ -77,7 +77,7 @@ Currently very little! current Road map to MVP below.
 
 ### Additional Features
 
-- [] Allow user to generate task hierarchy during single task creation using enter/tabs
+- [X] Allow user to generate task hierarchy during single task creation using enter/tabs
 - [] Single/double tap to edit
 - [] Swipe to delete
 - [] "long press" to drag

@@ -17,28 +17,30 @@ class App extends React.Component {
         deleteTask: this.deleteTask.bind(this),
         toggleTask: this.toggleTask.bind(this),
         moveTask: this.moveTask.bind(this),
-        selectTask: this.selectTask.bind(this)
+        selectTask: this.selectTask.bind(this),
+        updateTask: this.updateTask.bind(this)
       }
     }
   }
 
-  addTask(text) {
+  addTask(text, indices) {
     let task = {
       text: text,
       completed: false,
       subtasks: []
     };
 
-    let subtasks;
-    if (this.state.currentIndex.length > 0) {
-      subtasks = this.getNestedTask(this.state.tasks, this.state.currentIndex).subtasks;
-    } else {
-      subtasks = this.state.tasks;
+    let tasks = this.state.tasks;
+
+    if(!indices){
+      indices = this.state.currentIndex;
     }
 
-    subtasks.push(task);
-
-    this.setState({ tasks: [...this.state.tasks] });
+    tasks.push(task);
+    this.setState({tasks:tasks});
+    if(indices.length > 0) {
+      this.moveTask([tasks.length - 1], indices);
+    }
   }
 
   deleteTask(indices) {
@@ -67,23 +69,16 @@ class App extends React.Component {
 
     let tasks = [...this.state.tasks];
 
-    //get from task
+    //get 'from' task
     let fromIndex = from.pop();
     let fromList = this.getNestedList(tasks, from);
-
-
-    let toIndex = to.pop();
-
     let task = fromList[fromIndex];
 
+
     //splice 'task' into array
-    //if to index is -1 we just append to the end of the task list
-    if (to && to[0] === '-1') {
-      tasks.push(task);
-    } else {
-      let toList = this.getNestedList(tasks, to);
-      toList.splice(toIndex, 0, task);
-    }
+    let toIndex = to.pop();
+    let toList = this.getNestedList(tasks, to);
+    toList.splice(toIndex, 0, task);
 
     if (from.length === to.length && from.join() === to.join() && fromIndex > toIndex) {
       fromIndex++;
@@ -95,7 +90,20 @@ class App extends React.Component {
   }
 
   selectTask(indices) {
-    this.setState({ currentIndex: indices });
+    return new Promise((resolve) => {
+      this.setState({ currentIndex: indices }, () => { resolve() });
+    });
+  }
+
+  updateTask(indices, e) {
+    e.preventDefault();
+
+    let tasks = [...this.state.tasks];
+
+    let task = this.getNestedTask(tasks, indices);
+    task.text = e.target.innerText;
+
+    this.setState({ tasks: tasks })
   }
 
   getNestedList(baseList, indices) {
@@ -125,22 +133,22 @@ class App extends React.Component {
   render() {
     return (
       <Taskwell moveTask={this.moveTask.bind(this)}>
-          {
-            this.state.tasks.map((tasks, index) => {
-              return (
-                <TaskListContainer
-                  key={index}
-                  index={index}
-                  title={tasks.text}
-                  tasks={tasks.subtasks}
-                  {...this.state.taskManager}
-                ></TaskListContainer>
-              )
-            })
-          }
-          <button className="add-task-list"
-                  onClick={ (e)=>{this.selectTask([]); this.addTask('test')}}
-                >+</button>
+        {
+          this.state.tasks.map((tasks, index) => {
+            return (
+              <TaskListContainer
+                key={index}
+                index={index}
+                title={tasks.text}
+                tasks={tasks.subtasks}
+                {...this.state.taskManager}
+              ></TaskListContainer>
+            )
+          })
+        }
+        <button className="add-task-list"
+          onClick={(e) => {this.addTask('New List', [])}}
+        >+</button>
       </Taskwell>
     );
   }

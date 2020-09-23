@@ -4,14 +4,6 @@ import TaskList from './TaskList.js';
 import AddNew from './AddNew.js';
 
 class TaskListContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            tasks: this.props.tasks,
-            currentIndex: []
-        }
-    }
-
 
     render() {
         return (
@@ -28,6 +20,8 @@ class TaskListContainer extends React.Component {
                     toggleTask={this.props.toggleTask}
                     moveTask={this.props.moveTask}
                     deleteTask={this.props.deleteTask}
+                    updateTask={this.props.updateTask}
+                    addTask={this.props.addTask}
                 ></TaskList>
 
                 <AddNew addTask={this.props.addTask} index={this.props.index} selectTask={this.props.selectTask}></AddNew>

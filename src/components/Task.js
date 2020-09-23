@@ -23,6 +23,49 @@ class Task extends React.Component {
             placeholder.remove();
     }
 
+    onKeyUp(e) {
+        let element = e.target;
+        let indices = e.target.closest('li').id.split(',');
+
+        if (e.keyCode === 13 && !e.shiftKey) {
+            e.preventDefault();
+
+            let newIndex = parseInt(indices.pop()) + 1;
+            let newIndices = [...indices, newIndex];
+
+            this.props.addTask('', newIndices);
+            this.setState({},
+                () => { element.closest('li').nextSibling.querySelector('.text-content').focus() }
+            );
+        } else if (e.keyCode === 39 && e.shiftKey) {
+            let index = parseInt(indices.pop());
+            
+            if(index > 0) {
+                let insertAfter = element.closest('li').previousSibling.querySelector('ul').lastChild;
+                let fromIndices = [...indices, index];
+                let toIndices;
+                if(insertAfter) {
+                    let toIndex = insertAfter.id.split(',').pop();
+                    toIndices = [...indices, index - 1, parseInt(toIndex) + 1];
+                } else {
+                    toIndices = [...indices, index - 1, 0];
+                }
+
+                this.props.moveTask(fromIndices, toIndices);
+            }
+        } else if (e.keyCode === 37 && e.shiftKey) {
+            //determine if i can back up one (is indices length > 2)
+            if(indices.length > 2) {
+                let fromIndices = [...indices];
+                indices.pop();
+                let toIndex = parseInt(indices.pop()) + 1;
+                let toIndices = [...indices, toIndex];
+
+                this.props.moveTask(fromIndices, toIndices);
+            }
+        }
+    }
+
     render() {
         let subtasks = this.props.task.subtasks.map((task, index) => {
             let indices = [...this.props.indices, index];
@@ -34,7 +77,9 @@ class Task extends React.Component {
                 selectTask={(indices) => { this.props.selectTask(indices) }}
                 toggleTask={(indices) => { this.props.toggleTask(indices) }}
                 moveTask={(from, to) => this.props.moveTask(from, to)}
-                onDragOver={(e) => { this.props.onDragOver(e) }}>
+                addTask={this.props.addTask}
+                updateTask={this.props.updateTask}
+            >
             </Task>
         });
 
@@ -51,7 +96,14 @@ class Task extends React.Component {
                     <span className="fas fa-times-circle"
                         onClick={(e) => { e.stopPropagation(); this.props.deleteTask(this.props.indices) }}></span>
 
-                    <span>{this.props.task.text}</span>
+                    <span
+                        className="text-content"
+                        onBlur={e => this.props.updateTask(this.props.indices, e)}
+                        onKeyUp={e => this.onKeyUp(e)}
+                        contentEditable
+                        suppressContentEditableWarning
+                        dangerouslySetInnerHTML={{ __html: this.props.task.text }}
+                    ></span>
 
                     <span className="right-controls">
                         {/* <input type="checkbox" checked={this.props.task.completed}
