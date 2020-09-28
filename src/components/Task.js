@@ -39,12 +39,12 @@ class Task extends React.Component {
             );
         } else if (e.keyCode === 39 && e.shiftKey) {
             let index = parseInt(indices.pop());
-            
-            if(index > 0) {
+
+            if (index > 0) {
                 let insertAfter = element.closest('li').previousSibling.querySelector('ul').lastChild;
                 let fromIndices = [...indices, index];
                 let toIndices;
-                if(insertAfter) {
+                if (insertAfter) {
                     let toIndex = insertAfter.id.split(',').pop();
                     toIndices = [...indices, index - 1, parseInt(toIndex) + 1];
                 } else {
@@ -55,7 +55,7 @@ class Task extends React.Component {
             }
         } else if (e.keyCode === 37 && e.shiftKey) {
             //determine if i can back up one (is indices length > 2)
-            if(indices.length > 2) {
+            if (indices.length > 2) {
                 let fromIndices = [...indices];
                 indices.pop();
                 let toIndex = parseInt(indices.pop()) + 1;
@@ -63,11 +63,34 @@ class Task extends React.Component {
 
                 this.props.moveTask(fromIndices, toIndices);
             }
-        } else if (e.keyCode === 8) {
-            if(e.target.textContent.length === 0) {
-                this.props.deleteTask(this.props.indices);
+        } else if (e.keyCode === 8 && this.getCaretPosition(e.target) === 0) {
+            this.props.deleteTask(this.props.indices);
+        }
+    }
+
+    getCaretPosition(editableDiv) {
+        var caretPos = 0,
+            sel, range;
+        if (window.getSelection) {
+            sel = window.getSelection();
+            if (sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                if (range.commonAncestorContainer.parentNode == editableDiv) {
+                    caretPos = range.endOffset;
+                }
+            }
+        } else if (document.selection && document.selection.createRange) {
+            range = document.selection.createRange();
+            if (range.parentElement() == editableDiv) {
+                var tempEl = document.createElement("span");
+                editableDiv.insertBefore(tempEl, editableDiv.firstChild);
+                var tempRange = range.duplicate();
+                tempRange.moveToElementText(tempEl);
+                tempRange.setEndPoint("EndToEnd", range);
+                caretPos = tempRange.text.length;
             }
         }
+        return caretPos;
     }
 
     render() {
@@ -103,7 +126,7 @@ class Task extends React.Component {
                     <span
                         className="text-content"
                         onBlur={e => this.props.updateTask(this.props.indices, e)}
-                        onKeyUp={e => this.onKeyUp(e)}
+                        onKeyDown={e => this.onKeyUp(e)}
                         contentEditable
                         suppressContentEditableWarning
                         dangerouslySetInnerHTML={{ __html: this.props.task.text }}
