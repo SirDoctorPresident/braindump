@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from './Header';
 import TaskList from './TaskList.js';
-import AddNew from './AddNew.js';
 
 class TaskListContainer extends React.Component {
 
@@ -23,8 +22,6 @@ class TaskListContainer extends React.Component {
                     updateTask={this.props.updateTask}
                     addTask={this.props.addTask}
                 ></TaskList>
-
-                <AddNew addTask={this.props.addTask} index={this.props.index} selectTask={this.props.selectTask}></AddNew>
             </div>
         );
     }

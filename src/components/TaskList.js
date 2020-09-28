@@ -1,5 +1,7 @@
 import React from 'react';
 import Task from './Task.js';
+import AddNew from './AddNew.js';
+
 
 class TaskList extends React.Component {
     onDragOver(e) {
@@ -60,7 +62,7 @@ class TaskList extends React.Component {
             const offsetY = y - box.top - box.height / 2;
 
             if (Math.abs(offsetY) < closest.offsetY)
-                return {offsetY: offsetY, element: task, position: offsetY < 0 ? 'above' : 'below' }
+                return { offsetY: offsetY, element: task, position: offsetY < 0 ? 'above' : 'below' }
             else
                 return closest
         }, { offsetY: Number.POSITIVE_INFINITY, element: null });
@@ -69,7 +71,7 @@ class TaskList extends React.Component {
 
     dropTask(e) {
         e.stopPropagation();
-        
+
         let placeholder = document.querySelector('#placeholder');
         let dragging = document.querySelector('.dragging');
 
@@ -97,15 +99,20 @@ class TaskList extends React.Component {
         });
 
         return (
-            <ul 
-                onDragOver={e => this.onDragOver(e)}
-                onDrop={(e) => { this.dropTask(e) }}
-                onDragEnter={(e)=>{e.stopPropagation(); document.querySelector('#placeholder').className = 'task-spacer';
-            }}
-                
-            >
-                {tasks}
-            </ul>
+            <React.Fragment>
+                <ul
+                    onDragOver={e => this.onDragOver(e)}
+                    onDrop={(e) => { this.dropTask(e) }}
+                    onDragEnter={(e) => {
+                        e.stopPropagation(); document.querySelector('#placeholder').className = 'task-spacer';
+                    }}
+                >
+                    {tasks}
+                </ul>
+                <AddNew addTask={this.props.addTask} index={[this.props.index, this.props.tasks.length]}></AddNew>
+            </React.Fragment>
+
+
         )
     }
 }
