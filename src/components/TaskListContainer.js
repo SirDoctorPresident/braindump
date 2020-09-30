@@ -11,7 +11,9 @@ class TaskListContainer extends React.Component {
                  onDragEnter={(e)=>{e.stopPropagation();}}
                  id={this.props.index}
             >
-                <Header title={this.props.title}></Header>
+                <Header title={this.props.title}
+                        index={this.props.index}
+                        updateTask={this.props.updateTask}></Header>
 
                 <TaskList tasks={this.props.tasks}
                     index={this.props.index}

@@ -8,7 +8,6 @@ class Task extends React.Component {
 
     onDragStart(e) {
         e.stopPropagation();
-        e.dataTransfer.setData('text/plain', this.props.indices.join());
         let placeholder = document.createElement("div");
         placeholder.id = 'placeholder';
         document.body.append(placeholder);
@@ -144,8 +143,7 @@ class Task extends React.Component {
                 </div>
 
                 <ul
-                >
-                    {subtasks}
+                > {subtasks}
                 </ul>
             </li>
         )
